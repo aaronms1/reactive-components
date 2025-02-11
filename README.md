@@ -1,3 +1,5 @@
+## this readme was auto-gen from cpiolot-workspaces.
+
 # Library of Fully Reactive *.tsx Browser Components with SCSS Styling
 
 This repository is intended for creating a fully reactive suite of front-end .tsx components to ultimately serve as UI to a reactive Java back-end named 'PIA' (project-init-ai). The project uses the Vite build system for efficient development and build processes.
