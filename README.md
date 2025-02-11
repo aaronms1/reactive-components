@@ -1,2 +1,1 @@
-# dacss.net-reactive-components
-A repository for a library of fully reactive .tsx browser components with SCSS styling using Vite build system.
+This repository is empty. Any task executed on it should be considered a new capability and needs to be created.
