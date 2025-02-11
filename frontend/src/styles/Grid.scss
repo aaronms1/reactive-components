@@ -1,0 +1,12 @@
+.grid {
+  width: 100%; // Make the grid take full width by default
+  height: auto; // Allow grid height to grow with its content
+}
+
+/* Example: Define specific styling for grid items */
+.grid > * {
+  background-color: #f0f0f0; /* Light gray for visual structure (optional) */
+  padding: 1rem; /* Add some padding, optional */
+  border: 1px solid #ddd; /* Add a border to grid items */
+  text-align: center; /* Center alignment for demo purposes */
+}

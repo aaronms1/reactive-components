@@ -1,0 +1,30 @@
+{
+  "name": "reactive-components",
+  "version": "1.0.0",
+  "description": "Simple react components",
+  "main": "index.js",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aaronms1/reactive-components"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "vite": "^4.4.9",
+    "axios": "^1.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.17.0"
+  },
+  "devDependencies": {
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.1.1",
+    "sass": "^1.68.2",
+    "typescript": "^5.2.2"
+  }
+}

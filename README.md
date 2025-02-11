@@ -1,6 +1,3 @@
-### this readme was auto-gen from cpiolot-workspaces.
-so as of now none of the instructions work lol.
-
 # Library of Fully Reactive *.tsx Browser Components with SCSS Styling
 
 This repository is intended for creating a fully reactive suite of front-end .tsx components to ultimately serve as UI to a reactive Java back-end named 'PIA' (project-init-ai). The project uses the Vite build system for efficient development and build processes.
@@ -16,13 +13,10 @@ This repository is intended for creating a fully reactive suite of front-end .ts
 To get started with this project, follow the steps below:
 
 1. Clone the repository:
-   ```
-   git clone https://github.com/githubnext/workspace-blank.git
-   ```
 
-2. Navigate to the `frontend` directory:
+2. Navigate to the `root` of the project:
    ```
-   cd frontend
+   cd reactive-components
    ```
 
 3. Install the dependencies:
