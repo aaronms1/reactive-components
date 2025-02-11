@@ -1,29 +1,22 @@
-import React, { Component } from 'react';
-import './HeaderContainer.scss'; // Import for styling
-import HorizontalContainer from './HorizontalContainer'; // Import HorizontalContainer
+import React from 'react';
+import './FooterContainer.scss';
+import HorizontalContainer from './HorizontalContainer';
 
-interface HeaderProps {
-    title?: string; // Optional title displayed in the header
+interface FooterProps {
+    title?: string; // Optional title displayed in the footer
     className?: string; // Optional additional CSS classes
     children?: React.ReactNode; // Add `children` prop explicitly
 }
 
-class HeaderContainer extends Component<HeaderProps> {
-    render() {
-        const { title = 'HeaderContainer', className, children } = this.props;
+const FooterContainer: React.FC<FooterProps> = ({ title = 'FooterContainer', className, children }) => {
+    const footerClassName = `footer ${className || ''}`; // Combine base and custom classes
 
-        // Combine the base class with any custom classes passed via props
-        const headerClassName = `header ${className || ''}`;
+    return (
+        <footer className={footerClassName}>
+            <div className="footer-title">{title}</div>
+            <HorizontalContainer className="footer-content">{children}</HorizontalContainer>
+        </footer>
+    );
+};
 
-        return (
-            <header className={headerClassName}>
-                <div className="header-title">{title}</div>
-                <HorizontalContainer className="header-content">
-                    {children}
-                </HorizontalContainer>
-            </header>
-        );
-    }
-}
-
-export default HeaderContainer;
+export default FooterContainer;

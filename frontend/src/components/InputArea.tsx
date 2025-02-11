@@ -1,59 +1,49 @@
-import React, { Component, ChangeEvent } from 'react';
-import './InputArea.scss'; // Import for styling
+import React, {useState, ChangeEvent} from 'react';
+import './InputArea.scss';
 
 interface InputAreaProps {
-    type?: 'text' | 'number' | 'password' | 'email'; // Type of input (default: text)
-    value?: string | number; // Current value of the input
-    placeholder?: string; // Placeholder text
-    className?: string; // Optional additional CSS classes
-    onChange?: (value: string | number) => void; // Callback for input changes
-    label?: string; // Optional label for the input
+    type?: 'text' | 'number' | 'password' | 'email';
+    value?: string | number;
+    placeholder?: string;
+    className?: string;
+    onChange?: (value: string | number) => void;
+    label?: string;
 }
 
-interface InputAreaState {
-    value: string | number; // Current input value for controlled component
-}
+const InputArea: React.FC<InputAreaProps> = ({
+                                                 type = 'text',
+                                                 value: initialValue = '',
+                                                 placeholder,
+                                                 className,
+                                                 onChange,
+                                                 label,
+                                             }) => {
+    const [value, setValue] = useState<string | number>(initialValue);
 
-class InputArea extends Component<InputAreaProps, InputAreaState> {
-    constructor(props: InputAreaProps) {
-        super(props);
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const newValue = event.target.value;
+        setValue(newValue);
 
-        this.state = {
-            value: props.value || '', // Initialize value with props or empty
-        };
-    }
-
-    // Handle input changes
-    handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.target;
-        this.setState({ value });
-
-        // Call the parent's onChange callback if provided
-        if (this.props.onChange) {
-            this.props.onChange(value);
+        // Call parent's `onChange` callback if provided
+        if (onChange) {
+            onChange(newValue);
         }
     };
 
-    render() {
-        const { type = 'text', placeholder, className, label } = this.props;
-        const { value } = this.state;
+    const inputClassName = `input-area ${className || ''}`;
 
-        // Combine the base class with any custom classes passed as props
-        const inputClassName = `input-area ${className || ''}`;
-
-        return (
-            <div className={inputClassName}>
-                {label && <label className="input-label">{label}</label>}
-                <input
-                    type={type}
-                    value={value}
-                    placeholder={placeholder}
-                    onChange={this.handleChange}
-                    className="input-field"
-                />
-            </div>
-        );
-    }
-}
+    return (
+        <div className={inputClassName}>
+            {label && <label className="input-label">{label}</label>}
+            <input
+                type={type}
+                value={value}
+                placeholder={placeholder}
+                onChange={handleChange}
+                className="input-field"
+            />
+        </div>
+    );
+};
 
 export default InputArea;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './MessageInputBar.scss';
 import InputArea from './InputArea';
 import Button from './Button';
@@ -9,63 +9,38 @@ interface MessageInputBarProps {
     className?: string; // Optional additional CSS classes
 }
 
-interface MessageInputBarState {
-    message: string; // Current message text
-}
+const MessageInputBar: React.FC<MessageInputBarProps> = ({ onSend, placeholder = 'Enter your message...', className }) => {
+    const [message, setMessage] = useState<string>(''); // State to manage the current message
 
-class MessageInputBar extends Component<MessageInputBarProps, MessageInputBarState> {
-    constructor(props: MessageInputBarProps) {
-        super(props);
-
-        this.state = {
-            message: '', // Initialize empty message
-        };
-    }
-
-    // Handle input changes
-    handleInputChange = (value: string | number) => {
-        // Convert to a string if the value is a number
-        this.setState({ message: String(value) });
+    const handleInputChange = (newValue: string | number) => {
+        setMessage(String(newValue)); // Convert numbers to string
     };
 
-    // Handle the "send" button click
-    handleSend = () => {
-        const { message } = this.state;
-        const { onSend } = this.props;
-
+    const handleSend = () => {
         if (message.trim()) {
-            // Trigger send callback if provided
             if (onSend) {
-                onSend(message);
+                onSend(message); // Trigger `onSend` callback
             }
-
-            // Clear the input
-            this.setState({ message: '' });
+            setMessage(''); // Clear the input
         }
     };
 
-    render() {
-        const { placeholder = 'Enter your message...', className } = this.props;
-        const { message } = this.state;
+    const barClassName = `message-input-bar ${className || ''}`;
 
-        // Combine the base class with any custom classes passed as props
-        const barClassName = `message-input-bar ${className || ''}`;
-
-        return (
-            <div className={barClassName}>
-                <InputArea
-                    type="text"
-                    value={message}
-                    placeholder={placeholder}
-                    onChange={this.handleInputChange} // Corrected type
-                    className="message-input"
-                />
-                <Button className="send-button" onClick={this.handleSend}>
-                    Send
-                </Button>
-            </div>
-        );
-    }
-}
+    return (
+        <div className={barClassName}>
+            <InputArea
+                type="text"
+                value={message}
+                placeholder={placeholder}
+                onChange={handleInputChange}
+                className="message-input"
+            />
+            <Button className="send-button" onClick={handleSend}>
+                Send
+            </Button>
+        </div>
+    );
+};
 
 export default MessageInputBar;

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import './Button.scss'; // Import your button styles
+import React from 'react';
+import './Button.scss';
 
 interface ButtonProps {
     onClick?: () => void; // Callback for click events
@@ -7,16 +7,12 @@ interface ButtonProps {
     children?: React.ReactNode; // Button text or elements inside the button
 }
 
-class Button extends Component<ButtonProps> {
-    render() {
-        const { onClick, className, children } = this.props;
-
-        return (
-            <button className={`button ${className || ''}`} onClick={onClick}>
-                {children}
-            </button>
-        );
-    }
-}
+const Button: React.FC<ButtonProps> = ({ onClick, className = '', children }) => {
+    return (
+        <button className={`button ${className}`} onClick={onClick}>
+            {children}
+        </button>
+    );
+};
 
 export default Button;

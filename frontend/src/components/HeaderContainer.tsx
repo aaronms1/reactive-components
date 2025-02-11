@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import './HeaderContainer.scss'; // Import for styling
-import HorizontalContainer from './HorizontalContainer'; // Import HorizontalContainer
+import React from 'react';
+import './HeaderContainer.scss';
+import HorizontalContainer from './HorizontalContainer';
 
 interface HeaderProps {
     title?: string; // Optional title displayed in the header
@@ -8,22 +8,15 @@ interface HeaderProps {
     children?: React.ReactNode; // Add `children` prop explicitly
 }
 
-class HeaderContainer extends Component<HeaderProps> {
-    render() {
-        const { title = 'HeaderContainer', className, children } = this.props;
+const HeaderContainer: React.FC<HeaderProps> = ({ title = 'HeaderContainer', className, children }) => {
+    const headerClassName = `header ${className || ''}`; // Combine base and custom classes
 
-        // Combine the base class with any custom classes passed via props
-        const headerClassName = `header ${className || ''}`;
-
-        return (
-            <header className={headerClassName}>
-                <div className="header-title">{title}</div>
-                <HorizontalContainer className="header-content">
-                    {children}
-                </HorizontalContainer>
-            </header>
-        );
-    }
-}
+    return (
+        <header className={headerClassName}>
+            <div className="header-title">{title}</div>
+            <HorizontalContainer className="header-content">{children}</HorizontalContainer>
+        </header>
+    );
+};
 
 export default HeaderContainer;

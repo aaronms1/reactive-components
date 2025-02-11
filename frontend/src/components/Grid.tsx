@@ -1,53 +1,76 @@
-import React, { Component, ReactNode } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Observable } from 'rxjs';
 import './Grid.scss';
 
-interface GridItemProps {
-    children: ReactNode; // Content of the grid item
-    spanColumns?: number; // Number of columns this item spans
-    spanRows?: number; // Number of rows this item spans
+// Define the GridData type (shape of the data received from the backend)
+interface GridData {
+    content: string;
+    spanColumns: number;
+    spanRows: number;
 }
 
-export const GridItem: React.FC<GridItemProps> = ({
-                                                      children,
-                                                      spanColumns = 1,
-                                                      spanRows = 1,
-                                                  }) => {
-    const itemStyle: React.CSSProperties = {
-        gridColumn: `span ${spanColumns}`, // Span across columns
-        gridRow: `span ${spanRows}`, // Span across rows
-    };
+/**
+ * Creates an Observable stream from an EventSource (Reactive Stream).
+ */
+const getGridDataStream = (): Observable<GridData> => {
+    return new Observable<GridData>((observer) => {
+        const eventSource = new EventSource('/grid'); // SSE Endpoint
 
-    return <div style={itemStyle}>{children}</div>;
+        eventSource.onmessage = (event: MessageEvent) => {
+            observer.next(JSON.parse(event.data));
+        };
+
+        eventSource.onerror = (error) => {
+            observer.error(error);
+            eventSource.close();
+        };
+
+        return () => eventSource.close(); // Cleanup on unsubscribe
+    });
 };
 
 interface GridProps {
     columns?: number;
     gap?: string;
     className?: string;
-    children?: ReactNode | ReactNode[]; // Children can be GridItem components or raw elements
 }
 
-class Grid extends Component<GridProps> {
-    static defaultProps = {
-        columns: 3,
-        gap: '1rem',
+const Grid: React.FC<GridProps> = ({ columns = 3, gap = '1rem', className = '' }) => {
+    const [gridItems, setGridItems] = useState<GridData[]>([]); // State to store reactive grid items
+
+    useEffect(() => {
+        const subscription = getGridDataStream().subscribe({
+            next: (newItem) => {
+                setGridItems((prevItems) => [...prevItems, newItem]); // Add new grid items to state
+            },
+            error: (error) => console.error('Error in data stream:', error),
+        });
+
+        return () => subscription.unsubscribe(); // Cleanup on component unmount
+    }, []); // Empty dependency array ensures this runs once on mount
+
+    // Inline styles for the grid container
+    const gridStyle: React.CSSProperties = {
+        display: 'grid',
+        gridTemplateColumns: `repeat(${columns}, 1fr)`,
+        gap: gap,
     };
 
-    render() {
-        const { columns, gap, className, children } = this.props;
-
-        const gridStyle: React.CSSProperties = {
-            display: 'grid',
-            gridTemplateColumns: `repeat(${columns}, 1fr)`,
-            gap: gap,
-        };
-
-        return (
-            <div className={`grid ${className || ''}`} style={gridStyle}>
-                {children}
-            </div>
-        );
-    }
-}
+    return (
+        <div className={`grid ${className}`} style={gridStyle}>
+            {gridItems.map((item, index) => (
+                <div
+                    key={index}
+                    style={{
+                        gridColumn: `span ${item.spanColumns}`,
+                        gridRow: `span ${item.spanRows}`,
+                    }}
+                >
+                    {item.content}
+                </div>
+            ))}
+        </div>
+    );
+};
 
 export default Grid;
