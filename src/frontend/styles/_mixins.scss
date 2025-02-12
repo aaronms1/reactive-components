@@ -1,0 +1,48 @@
+@import 'variables';
+@mixin slide-from($direction, $distance: 100%) {
+  position: fixed; // Elements like drawers, headers, etc., are positioned fixed
+  transition: transform $animation-duration $ease-in-out;
+
+  @if $direction == 'top' {
+    transform: translateY(-$distance);
+    top: 0;
+    left: 0;
+    right: 0;
+  } @else if $direction == 'bottom' {
+    transform: translateY($distance);
+    bottom: 0;
+    left: 0;
+    right: 0;
+  } @else if $direction == 'left' {
+    transform: translateX(-$distance);
+    top: 0;
+    bottom: 0;
+    left: 0;
+  } @else if $direction == 'right' {
+    transform: translateX($distance);
+    top: 0;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+@mixin slider-active($direction) {
+  @if $direction == 'top' {
+    transform: translateY(0);
+  } @else if $direction == 'bottom' {
+    transform: translateY(0);
+  } @else if $direction == 'left' {
+    transform: translateX(0);
+  } @else if $direction == 'right' {
+    transform: translateX(0);
+  }
+}
+
+@mixin side-nav($position, $width: 250px) {
+  @include slide-from($position, $width);
+  width: $width;
+  height: 100vh; // Full viewport height
+  background-color: #fff; // Default background for nav
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Light shadow effect
+  z-index: 1000; // Ensure it is above other elements
+}

@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "allowJs": false,
+    "checkJs": false,
     "target": "esnext",
     "module": "esnext",
     "jsx": "react-jsx",
@@ -10,6 +12,6 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": [
-    "frontend/src"
+    "src"
   ]
 }

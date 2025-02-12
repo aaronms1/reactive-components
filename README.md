@@ -41,9 +41,9 @@ frontend/
 │   ├── components/
 │   │   └── ExampleComponent.tsx
 │   ├── styles/
-│   │   ├── App.scss
+│   │   ├── MainView.scss
 │   │   └── ExampleComponent.scss
-│   ├── App.tsx
+│   ├── @main-view.tsx
 │   ├── index.tsx
 ├── package.json
 ├── tsconfig.json

@@ -1,0 +1,25 @@
+@import '../variables';
+@import '../mixins';
+
+.side-nav {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  transition: transform $animation-duration $ease-in-out;
+
+  &.side-nav-left {
+    @include side-nav(left); // Apply left side navigation properties
+  }
+
+  &.side-nav-right {
+    @include side-nav(right); // Apply right side navigation properties
+  }
+
+  &.active {
+    @include slider-active(left); // Active state for left or override dynamically
+  }
+
+  &.active.side-nav-right {
+    @include slider-active(right);
+  }
+}

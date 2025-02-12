@@ -1,0 +1,23 @@
+.main-view {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  .side-navigation-example {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
+
+  .content-section {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+  }
+
+  .message-input-section {
+    border-top: 1px solid #ccc;
+    padding: 1rem;
+    background: #f9f9f9;
+  }
+}
